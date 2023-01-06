@@ -1,22 +1,13 @@
 import React from 'react'
 import StarRating from '../../components/StarRating';
+import { renderCollectionColorText } from '../../helpers/renderCollectionColors';
 
-const renderCollectionColor = ( collectionString: string) => {
-	switch(collectionString) {
-		case 'aqua':
-			return "text-[#437A90]";
-		case 'terra':
-			return "text-[#79915c]";
-		default:
-			return "text-black";
-	}
-}
 const renderCartBackground = ( collectionString: string) => {
 	switch(collectionString) {
 		case 'aqua':
-			return "bg-[url('/waves.jpg')]";
+			return "bg-[url('/images/waves.jpg')]";
 		case 'terra':
-			return "bg-[url('/leaves.jpg')]";
+			return "bg-[url('/images/leaves.jpg')]";
 		default:
 			return "bg-orange-500";
 	}
@@ -27,19 +18,25 @@ type Props = {
 	price: number,
 	collection: string,
 	details: string,
+	reviewData: {
+		avgReview: number,
+		numReviews: number
+	}
 }
 
-const ProductDescription = ({ name, price, collection, details }: Props) => {
+const ProductDescription = ({ name, price, collection, details, reviewData }: Props) => {
+	const { avgReview, numReviews } = reviewData;
+
 	const current = new Date();
-	current.setDate(current.getDate() + 2);
+	current.setDate(current.getDate() + 4);
 
   return (
     <div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-			rounded-[15px] px-10 py-5 backdrop-blur-[2px]">
+			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px]">
 			{/* Title */}
 			<div className="flex justify-between items-end">
 				<h2 className="font-orbitron text-3xl tracking-wider">{name}</h2>
-				<p className="text-xl">${price}</p>
+				<p className="text-xl font-medium">${price}</p>
 			</div>
 			
 			{/* Horizontal break */}
@@ -47,13 +44,13 @@ const ProductDescription = ({ name, price, collection, details }: Props) => {
 
 			{/* Review display */}
 			<div className="text-lg">
-				<StarRating rating={3.4} starWidth={22}/>
-				<p>21 reviews</p>
+				<StarRating rating={avgReview} starWidth={22}/>
+				<p>{numReviews ?? 0} reviews</p>
 			</div>
 
 			{/* Description text */}
 			<div>
-				<h3 className={"font-orbitron text-xl tracking-widest " + renderCollectionColor(collection)}>
+				<h3 className={"font-orbitron text-xl tracking-widest " + renderCollectionColorText(collection)}>
 					{collection ? collection : "generic"} collection
 				</h3>
 				<p>{details}</p>
@@ -62,7 +59,7 @@ const ProductDescription = ({ name, price, collection, details }: Props) => {
 			{/* Cart text */}
 			<div className="flex flex-col gap-2">
 				{/* Shipping text */}
-				<p>Ships by {current.toDateString()}.</p>
+				<p>Ships free by <span className="font-medium">{current.toDateString()}</span>.</p>
 				{/* Add quantity selector*/}
 				<div className="border-[2px] bg-[#f5f5f5] border-gray-600 border-opacity-50 rounded-[10px] h-[3rem] items-center flex justify-around">
 					<button className="w-8 text-3xl font-light">-</button>

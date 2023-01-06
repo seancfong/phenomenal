@@ -1,3 +1,5 @@
+import { collectionList } from './schemaData.json'
+
 export default {
     name: 'product',
     title: 'Product',
@@ -36,10 +38,7 @@ export default {
         title: 'Collection',
         type: 'string',
         options: {
-          list: [
-            { title: 'Aqua', value: 'aqua' },
-            { title: 'Terra', value: 'terra' },
-          ]
+          list: collectionList
         },
       },
       { 
@@ -48,10 +47,16 @@ export default {
         type: 'string',
       },
       { 
-        name: 'includes',
-        title: 'Includes',
+        name: 'features',
+        title: 'Features',
         type: 'array',
         of: [{type: 'string'}]
+      },
+      { 
+        name: 'reviews',
+        title: 'Reviews',
+        type: 'array',
+        of: [{type: 'productReview'}]
       }
     ]
   }

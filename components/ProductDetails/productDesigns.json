@@ -1,0 +1,25 @@
+{
+	"aqua": [
+		{
+			"header": "Durable",
+			"content": "Our cases are made with high-quality materials to ensure they can withstand the weight of the water and any rough handling.",
+			"imageSrc": "/images/leaves.jpg"
+		},
+		{
+			"header": "Watertight",
+			"content": "We use silicone seals to ensure that there are no leaks in the case, ensuring the safety of your aquatic life."
+		},
+		{
+			"header": "Ventilated",
+			"content": "Proper ventilation is crucial for the health of your aquatic life. That's why our cases have multiple air holes and a built-in filtration system to keep the water oxygenated."
+		},
+		{
+			"header": "Customizable",
+			"content": "We offer a range of customization options, so you can create a case that fits the unique needs of your aquatic life. This includes options for lighting, filtration, and more."
+		},
+		{
+			"header": "Maintainable",
+			"content": "Our cases are designed for easy maintenance, with removable panels for quick access to the inside of the case."
+		}
+	]
+}

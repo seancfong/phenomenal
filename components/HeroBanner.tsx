@@ -37,7 +37,7 @@ const HeroBanner = () => {
 					</p>
 
 					{/* Leaves button */}
-					<button className="bg-[url('/leaves.jpg')] bg-center w-[80%] max-w-xs sm:w-[100%] h-[3rem] relative rounded-xl overflow-hidden">
+					<button className="bg-[url('/images/leaves.jpg')] bg-center w-[80%] max-w-xs sm:w-[100%] h-[3rem] relative rounded-xl overflow-hidden">
 						<div 
 							className="h-full flex flex-row items-center justify-end 
 							bg-gradient-to-r from-[rgba(175,134,9,0.3)] to-[rgba(46,66,51,0.7)]">

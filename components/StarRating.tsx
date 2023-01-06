@@ -9,7 +9,7 @@ const StarRating = ({ rating, starWidth }: Props) => {
 	const stars = [];
 
 	for (let curStar = 1; curStar <= 5; curStar++) {
-		if ( curStar < rating ) {
+		if ( curStar <= rating ) {
 			stars.push(<img src="/star_full.svg" width={starWidth} key={curStar}/>);  // full stars
 		} else if ( (curStar - rating > 0) && (curStar - rating < 1) ) {
 			stars.push(<img src="/star_half.svg" width={starWidth} key={curStar}/>);  // half star
