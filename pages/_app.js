@@ -3,7 +3,11 @@ import '../styles/topography.css'
 
 // preload raleway font
 import { Raleway, Orbitron } from '@next/font/google'
+
+// other imports
 import Layout from '../components/Layout'
+import { StateContext } from '../context/StateContext'
+import { Toaster } from 'react-hot-toast'
 
 const raleway = Raleway({ 
   subsets: ['latin'],
@@ -18,9 +22,12 @@ const orbitron = Orbitron({
 export default function App({ Component, pageProps }) {
   return (
     <main className={`${raleway.variable} ${orbitron.variable} font-sans`}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <StateContext>
+        <Layout>
+          <Toaster />
+          <Component {...pageProps} />
+        </Layout>
+      </StateContext>
     </main>
   )
 }

@@ -9,8 +9,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        aqua: '#437A90',
-        terra: '#79915c'
+        'aqua': '#437A90',
+        'terra': '#79915C',
+        'collectiongeneric': '#E49B0F'
       },
       fontFamily: {
         raleway: ['var(--font-raleway)', ...fontFamily.sans],

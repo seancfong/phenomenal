@@ -12,19 +12,19 @@ type Props = {
 const ProductReviews = ({ reviewData }: Props) => {
 	const { avgReview, numReviews, reviewSlice } = reviewData;
 
-	console.log(reviewSlice);
 
   return (
 		<>
 			{/* Side Panel */}
-			<div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px]">
+			<div className="md:sticky md:top-5 max-h-[80vh] font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
+				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] z-30">
 				{avgReview} stars from {numReviews} reviews
 			</div>
 
+
 			{/* Reviews */}
-			<div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px]">
+			<div className="font-raleway flex flex-col row-span-2 gap-5 border-[3px] border-gray-600 border-opacity-50 
+				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] h-[90rem]">
 				{/* Title */}
 				<div>
 					<h2 className="font-orbitron text-3xl tracking-wider">hear what they say.</h2>

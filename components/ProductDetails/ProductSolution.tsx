@@ -1,29 +1,35 @@
 import React from 'react'
-import { renderCollectionColorText } from '../../helpers/renderCollectionColors'
+import {PortableText} from '@portabletext/react'
 
-const renderSolutionTitle = ( collectionString: string) => {
+export const renderCollectionColorText = ( collectionString: string) => {
 	switch(collectionString) {
 		case 'aqua':
-			return "bring the sea to your setup.";
+			return "text-aqua";
 		case 'terra':
-			return "the most powerful greenhouse.";
+			return "text-terra";
 		default:
-			return "discover what's extraordinary.";
+			return "text-collectiongeneric";
 	}
 }
 
 type Props = {
-	collection: string
+	designDetails: {
+		collection: string,
+		solutionHeader: string,
+		solutionDescription: Array<any>
+	}
 }
 
-const ProductSolution = ({ collection }: Props) => {
+const ProductSolution = ({ designDetails }: Props) => {
+	console.log(designDetails);
+
   return (
     <div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] text-right">
+			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] text-right self-stretch">
 			{/* Title */}
 			<div>
 				<h2 className="font-orbitron text-2xl tracking-wider">
-					{renderSolutionTitle(collection)}
+					{(designDetails?.solutionHeader ?? "discover what's phenomenal.")}
 				</h2>
 			</div>
 
@@ -31,19 +37,18 @@ const ProductSolution = ({ collection }: Props) => {
 			<hr className="w-[calc(100%+2rem)] h-[2px] border-0 bg-gray-600 self-center mt-[-1.25rem]"/>
 
 			{/* Testimonial text */}
-			<h3 className={"text-xl font-orbitron tracking-wider " + renderCollectionColorText(collection)}>
-				We're all about making PC cases that are out of the ordinary. 
+			<h3 className={"text-xl font-orbitron tracking-wider " + renderCollectionColorText(designDetails?.collection)}>
+				We're all about creating anything out of the ordinary. 
 			</h3>
-			<p>
-				The aqua collection provides a comfortable and safe home for your aquatic friends, 
-				while also offering an attractive design to enhance the aesthetics of your home or office! 
-			</p>
-			<p>
-				We've put a lot of thought into innovation and functionality.
-				That's why we've designed our aquarium cases with the specific features in mind:
-			</p>
+			{designDetails?.solutionDescription 
+				? <PortableText value={designDetails?.solutionDescription}/> 
+				: `This is how we create the most innovative and creative products just for you.`
+			}
+			
 		</div>
   )
 }
 
 export default ProductSolution
+
+// The aqua collection provides a comfortable and safe home for your aquatic friends, while also offering an attractive design to enhance the aesthetics of your home or office! <br/><br/> We've put a lot of thought into innovation and functionality. That's why we've designed our aquarium cases with the specific features in mind:

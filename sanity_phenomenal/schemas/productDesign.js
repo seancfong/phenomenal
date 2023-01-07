@@ -14,6 +14,17 @@ export default {
 			},
 		},
 		{
+			name: 'solutionHeader',
+			title: 'Solution Header',
+			type: 'string'
+		},
+		{
+			name: 'solutionDescription',
+			title: 'Solution Description',
+			type: 'array', 
+			of: [{type: 'block'}]
+		},
+		{
 			name: 'content',
 			title: 'Content',
 			type: 'array',

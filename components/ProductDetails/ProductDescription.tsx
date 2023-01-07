@@ -1,6 +1,5 @@
 import React from 'react'
 import StarRating from '../../components/StarRating';
-import { renderCollectionColorText } from '../../helpers/renderCollectionColors';
 
 const renderCartBackground = ( collectionString: string) => {
 	switch(collectionString) {
@@ -9,7 +8,18 @@ const renderCartBackground = ( collectionString: string) => {
 		case 'terra':
 			return "bg-[url('/images/leaves.jpg')]";
 		default:
-			return "bg-orange-500";
+			return "bg-[url('/images/orange.jpg')]";
+	}
+}
+
+export const renderCollectionColorText = ( collectionString: string) => {
+	switch(collectionString) {
+		case 'aqua':
+			return "text-aqua";
+		case 'terra':
+			return "text-terra";
+		default:
+			return "text-collectiongeneric";
 	}
 }
 
@@ -20,18 +30,22 @@ type Props = {
 	details: string,
 	reviewData: {
 		avgReview: number,
-		numReviews: number
-	}
+		numReviews: number,
+	},
+	incQty: () => void,
+	decQty: () => void,
+	qty: number,
+	onAdd: () => void,
 }
 
-const ProductDescription = ({ name, price, collection, details, reviewData }: Props) => {
+const ProductDescription = ({ name, price, collection, details, reviewData, incQty, decQty, qty, onAdd }: Props) => {
 	const { avgReview, numReviews } = reviewData;
 
 	const current = new Date();
 	current.setDate(current.getDate() + 4);
 
   return (
-    <div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
+		<div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
 			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px]">
 			{/* Title */}
 			<div className="flex justify-between items-end">
@@ -62,19 +76,22 @@ const ProductDescription = ({ name, price, collection, details, reviewData }: Pr
 				<p>Ships free by <span className="font-medium">{current.toDateString()}</span>.</p>
 				{/* Add quantity selector*/}
 				<div className="border-[2px] bg-[#f5f5f5] border-gray-600 border-opacity-50 rounded-[10px] h-[3rem] items-center flex justify-around">
-					<button className="w-8 text-3xl font-light">-</button>
-					<span className="font-orbitron text-center text-lg tracking-wider">quantity: 0</span>
-					<button className="w-8 text-3xl font-light">+</button>
+					<button className="w-8 text-3xl font-light" onClick={decQty}>-</button>
+					<span className="font-orbitron text-center text-lg tracking-wider">quantity: {qty}</span>
+					<button className="w-8 text-3xl font-light" onClick={incQty}>+</button>
 				</div>
 				{/* Add to cart button */}
-				<button className={"bg-center w-full h-[3rem] rounded-[10px] " + renderCartBackground(collection)}>
-					<div className="flex items-center justify-center w-full h-full 
-						bg-gradient-to-r from-[rgba(0,0,0,0.0)] via-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.0)]">
+				<button className={"bg-center w-full h-[3rem] rounded-[10px] " + renderCartBackground(collection)}
+					onClick={onAdd}
+				>
+					<div className="flex items-center justify-center w-full h-full rounded-[10px]
+						bg-gradient-to-r from-[rgba(0,0,0,0.1)] via-[rgba(50,50,50,0.3)] to-[rgba(0,0,0,0.1)]">
 						<span className="font-orbitron text-white text-lg tracking-wider">add to cart</span>
 					</div>	
 				</button>
 			</div>
 		</div>
+    
   )
 }
 
