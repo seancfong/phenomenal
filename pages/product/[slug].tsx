@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { client, urlFor } from '../../lib/client'
 import { ProductDescription, ProductFeatures, ProductSolution } from '../../components/ProductDetails';
@@ -7,13 +7,8 @@ import ProductDesign from '../../components/ProductDetails/ProductDesign';
 import ProductReviews from '../../components/ProductDetails/ProductReviews';
 import { useStateContext } from '../../context/StateContext'
 
-const ProductDetails = ({ product, designDetails, reviewData }) => {
-	// console.log(product);
-	// console.log(products);
-	// console.log(designDetails);
-	// console.log(reviewData);
-
-  const { image, name, price, details, collection, features, _id } = product;
+const ProductDetails = ({ product, reviewStats }) => {
+  const { image, name, price, details, collection, features, _id, slug, productSolution } = product;
 	const { incQty, decQty, qty, onAdd } = useStateContext();
 
 	return (
@@ -36,7 +31,7 @@ const ProductDetails = ({ product, designDetails, reviewData }) => {
 							price={price} 
 							collection={collection} 
 							details={details} 
-							reviewData={reviewData}
+							reviewStats={reviewStats}
 							incQty={incQty}
 							decQty={decQty}
 							qty={qty}
@@ -53,7 +48,7 @@ const ProductDetails = ({ product, designDetails, reviewData }) => {
 				
 				
 				{/* Solution container */}
-				<ProductSolution designDetails={designDetails} />
+				<ProductSolution designSolutionDescription={productSolution} />
 			</div>
 
 			{/* Section break */}
@@ -62,7 +57,7 @@ const ProductDetails = ({ product, designDetails, reviewData }) => {
 			{/* Product collection design */}
 			<div className="grid items-start grid-cols-[minmax(0,80vw)] md:grid-cols-[2fr_1fr_2fr] 
 				gap-5 md:gap-y-20 px-5 md:px-10 max-w-7xl">
-				<ProductDesign designDetails={designDetails?.content}/>
+				<ProductDesign collection={collection}/>
 			</div>
 
 			{/* Section break */}
@@ -70,7 +65,7 @@ const ProductDetails = ({ product, designDetails, reviewData }) => {
 
 			<div className="grid items-start w-full grid-cols-[minmax(0,80vw)] md:grid-cols-[2fr_3fr] 
 				gap-5 px-5 md:px-10 max-w-7xl justify-center">
-				<ProductReviews reviewData={reviewData}/>
+				<ProductReviews slug={slug} reviewStats={reviewStats} />
 			</div>
 		</div>
   )
@@ -83,7 +78,7 @@ export const getStaticPaths = async () => {
 		}
 	}`
 
-	const products = await client.fetch(query)
+	const products = await client.fetch(query);
 
 	const paths = products.map((product) => ({ 
 		params: { 
@@ -98,33 +93,29 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params: { slug }}) => {
+	// SSR relevant content: product details, solution header, basic review stats
 	const query = `*[_type == "product" && slug.current == '${slug}'][0] {
-		image, name, price, details, collection, features, _id
+			image, name, price, details, collection, features, _id, 
+			"slug": slug.current,
+			"productSolution": *[_type == "productDesign" && collection == ^.collection][0] {
+				solutionDescription, solutionHeader, collection
+			}
 	}`;
 
-	const queryCollection = `*[_type == "product" && slug.current == '${slug}'][0] {
-		collection
-	}`;
-
-	const queryReview = `{
+	const reviewQuery = `{
 		"avgReview": math::avg(*[_type == "product" && slug.current == '${slug}'][0]
 			.reviews[].rating
 		),
 		"numReviews": length(*[_type == "product" && slug.current == '${slug}'][0]
 			.reviews[]
 		),
-		"reviewSlice": *[_type == "product" && slug.current == '${slug}'][0].reviews[0..9]
 	}`;
 
 	const product = await client.fetch(query);
-	const designDetails = await client.fetch(queryCollection)
-		.then(data => {
-			return client.fetch(`*[_type == "productDesign" && collection == "${data.collection}"][0]`)
-		});
-	const reviewData = await client.fetch(queryReview);
+	const reviewStats = await client.fetch(reviewQuery);
 
   return {
-    props: { product, designDetails, reviewData }
+    props: { product, reviewStats }
   }
 }
 

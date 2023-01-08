@@ -13,15 +13,15 @@ export const renderCollectionColorText = ( collectionString: string) => {
 }
 
 type Props = {
-	designDetails: {
+	designSolutionDescription: {
 		collection: string,
 		solutionHeader: string,
 		solutionDescription: Array<any>
 	}
 }
 
-const ProductSolution = ({ designDetails }: Props) => {
-	console.log(designDetails);
+const ProductSolution = ({ designSolutionDescription }: Props) => {
+	const { collection, solutionHeader, solutionDescription } = designSolutionDescription || {}; 
 
   return (
     <div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
@@ -29,7 +29,7 @@ const ProductSolution = ({ designDetails }: Props) => {
 			{/* Title */}
 			<div>
 				<h2 className="font-orbitron text-2xl tracking-wider">
-					{(designDetails?.solutionHeader ?? "discover what's phenomenal.")}
+					{(solutionHeader ?? "discover what's phenomenal.")}
 				</h2>
 			</div>
 
@@ -37,11 +37,11 @@ const ProductSolution = ({ designDetails }: Props) => {
 			<hr className="w-[calc(100%+2rem)] h-[2px] border-0 bg-gray-600 self-center mt-[-1.25rem]"/>
 
 			{/* Testimonial text */}
-			<h3 className={"text-xl font-orbitron tracking-wider " + renderCollectionColorText(designDetails?.collection)}>
+			<h3 className={"text-xl font-orbitron tracking-wider " + renderCollectionColorText(collection)}>
 				We're all about creating anything out of the ordinary. 
 			</h3>
-			{designDetails?.solutionDescription 
-				? <PortableText value={designDetails?.solutionDescription}/> 
+			{solutionDescription 
+				? <PortableText value={solutionDescription}/> 
 				: `This is how we create the most innovative and creative products just for you.`
 			}
 			

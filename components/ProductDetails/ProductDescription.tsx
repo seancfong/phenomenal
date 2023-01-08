@@ -28,7 +28,7 @@ type Props = {
 	price: number,
 	collection: string,
 	details: string,
-	reviewData: {
+	reviewStats: {
 		avgReview: number,
 		numReviews: number,
 	},
@@ -38,8 +38,8 @@ type Props = {
 	onAdd: () => void,
 }
 
-const ProductDescription = ({ name, price, collection, details, reviewData, incQty, decQty, qty, onAdd }: Props) => {
-	const { avgReview, numReviews } = reviewData;
+const ProductDescription = ({ name, price, collection, details, reviewStats, incQty, decQty, qty, onAdd }: Props) => {
+	const { avgReview, numReviews } = reviewStats || {};
 
 	const current = new Date();
 	current.setDate(current.getDate() + 4);
@@ -57,10 +57,10 @@ const ProductDescription = ({ name, price, collection, details, reviewData, incQ
 			<hr className="w-[calc(100%+2rem)] h-[2px] border-0 bg-gray-600 self-center mt-[-1.25rem]"/>
 
 			{/* Review display */}
-			<div className="text-lg">
-				<StarRating rating={avgReview} starWidth={22}/>
-				<p>{numReviews ?? 0} reviews</p>
-			</div>
+				<div className="text-lg">
+					<StarRating rating={avgReview} starWidth={22}/>
+					{ reviewStats && <p>{numReviews ?? 0} reviews</p> }
+				</div>
 
 			{/* Description text */}
 			<div>

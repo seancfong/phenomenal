@@ -1,17 +1,30 @@
-import React from 'react'
-import { urlFor } from '../../lib/client'
-
-interface productDesignContent {
-	header: string,
-	content: string,
-	imageSrc: Array<any>
-}
+import React, { useEffect, useState } from 'react'
+import { client, urlFor } from '../../lib/client'
 
 type Props = {
-	designDetails: Array<productDesignContent>
+	collection: string
 }
 
-const ProductDesign = ({ designDetails }: Props) => {
+const ProductDesign = ({ collection }: Props) => {
+	const [designDetails, setDesignDetails] = useState([]);
+
+	// CSR additional data that may take longer to fetch: design content
+	useEffect(() => {
+		const query = `*[_type == "productDesign" && collection == '${collection}'][0] {
+			content
+		}`;
+
+		const fetchSolution = async () => {
+			await client.fetch(query)
+				.then(data => {
+					setDesignDetails(data.content);
+				})
+		}
+
+		fetchSolution()
+			.catch(console.error);
+	}, []);
+
 	return (
 		<>
 			{designDetails?.map(({ header, content, imageSrc }, index) =>
