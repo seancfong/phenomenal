@@ -20,15 +20,17 @@ export const StateContext = ({ children }) => {
 
 	const onAdd = (product, quantity) => {
 		const checkProductInCart = cartItems.find((item) => item._id === product._id);
-
+		
 		setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
 		setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
 		if (checkProductInCart) {
+			console.log(`${product.name} found in cart`);
 			const updatedCartItems = cartItems.map((cartProduct) => {
-				if (cartProduct._id === product._id ) return {
+				return {
 					...cartProduct,
-					quantity: cartProduct.quantity + quantity
+					quantity: cartProduct.quantity 
+						+ ( (cartProduct._id === product._id) ? quantity : 0 )
 				}
 			})
 
@@ -40,6 +42,7 @@ export const StateContext = ({ children }) => {
 		}
 		
 		toast.success(`${qty} ${product.name} added to cart.`);
+		setQty(1);
 	}
 
 	const onRemove = (product) => {
@@ -55,16 +58,26 @@ export const StateContext = ({ children }) => {
     foundProduct = cartItems.find((item) => item._id === id);
     index = cartItems.findIndex((product) => product._id === id);
 
-    const newCartItems = cartItems.filter((item) => item._id !== id);
-
     if (value === 'inc') {
-      setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]);
+      setCartItems(cartItems.map((item) => {
+				// found the item to increase quantity
+				if (item._id === id) {
+					return { ...foundProduct, quantity: foundProduct.quantity + 1 };
+				}
+					return item;
+			}));
       setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
       setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1);
 
     } else if (value === 'dec') {
       if (foundProduct.quantity > 1) {
-        setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]);
+        setCartItems(cartItems.map((item) => {
+					// found the item to increase quantity
+					if (item._id === id) {
+						return { ...foundProduct, quantity: foundProduct.quantity - 1 }
+					}
+						return item
+				}));
         setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities - 1);
 

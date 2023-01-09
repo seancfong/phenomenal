@@ -21,7 +21,7 @@ const Navbar = (props: Props) => {
 			</button>
 
 			{/* Cart modal */}
-			{ showCart && <Cart/>}
+			{ showCart && <Cart/> }
     </div>
   )
 }

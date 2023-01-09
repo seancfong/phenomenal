@@ -7,9 +7,38 @@ import ProductDesign from '../../components/ProductDetails/ProductDesign';
 import ProductReviews from '../../components/ProductDetails/ProductReviews';
 import { useStateContext } from '../../context/StateContext'
 
-const ProductDetails = ({ product, reviewStats }) => {
+export interface IReviewStats {
+	avgReview: number,
+	numReviews: number
+}
+
+const ProductDetails = ({ product }) => {
   const { image, name, price, details, collection, features, _id, slug, productSolution } = product;
 	const { incQty, decQty, qty, onAdd } = useStateContext();
+
+	const [ reviewStats, setReviewStats ] = useState<IReviewStats>({ avgReview: 0, numReviews: 0});
+
+	const fetchReviewStats = async () => {
+		const reviewQuery = `{
+			"avgReview": math::avg(*[_type == "product" && slug.current == '${slug}'][0]
+				.reviews[].rating
+			),
+			"numReviews": length(*[_type == "product" && slug.current == '${slug}'][0]
+				.reviews[]
+			),
+		}`;
+
+		await client.fetch(reviewQuery)
+			.then(data => {
+				setReviewStats(data);
+			})
+	}
+
+	// Client-side render review stats, as sanity functions take extra computation
+	useEffect(() => {
+		fetchReviewStats();
+
+	},[]);
 
 	return (
 		<div className={"w-full flex flex-col bg-[#eeeeee] items-center justify-center gap-10 " + renderBackgroundPattern(collection)}>
@@ -102,20 +131,10 @@ export const getStaticProps = async ({ params: { slug }}) => {
 			}
 	}`;
 
-	const reviewQuery = `{
-		"avgReview": math::avg(*[_type == "product" && slug.current == '${slug}'][0]
-			.reviews[].rating
-		),
-		"numReviews": length(*[_type == "product" && slug.current == '${slug}'][0]
-			.reviews[]
-		),
-	}`;
-
 	const product = await client.fetch(query);
-	const reviewStats = await client.fetch(reviewQuery);
 
   return {
-    props: { product, reviewStats }
+    props: { product }
   }
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+
 // Star rating component
 import StarRating from '../StarRating'
 
@@ -7,7 +8,7 @@ import StarRating from '../StarRating'
 import { client } from '../../lib/client'
 
 // Chart JS components
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartDataset } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -43,7 +44,7 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 			setReviewChartData([avgReview ?? 0, 5 - (avgReview ?? 0)]);
 		}, 1000);
 		
-	}, []);
+	}, [reviewStats]);
 
 	const { avgReview, numReviews } = reviewStats ?? {};
 
@@ -69,8 +70,9 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 								tooltip: false,
 								legend: {
 									display: false
-							}
-							}
+								}
+							},
+							cutout: '90%'
 						}}
 						data={{
 							labels: ['Jun', 'Jul', 'Aug'],
@@ -81,7 +83,6 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 									backgroundColor: ["#74C365", "#dddddd"],
 									borderColor: ["rgba(75,85,99,0.5)", "#eeeeee"],
 									borderWidth: 3,
-									cutout: '90%'
 								},
 							],
 						}}
