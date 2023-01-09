@@ -8,7 +8,7 @@ import StarRating from '../StarRating'
 import { client } from '../../lib/client'
 
 // Chart JS components
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartDataset } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -67,9 +67,9 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 						options={{
 							aspectRatio: 1, 
 							plugins: {
-								tooltip: false,
+								tooltip: false as const,
 								legend: {
-									display: false
+									display: false as const
 								}
 							},
 							cutout: '90%'
