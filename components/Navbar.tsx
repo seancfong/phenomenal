@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 import { useStateContext } from '../context/StateContext'
+import { CiShoppingCart } from "react-icons/ci";
 import Cart from './Cart'
 
 type Props = {}
@@ -17,7 +18,11 @@ const Navbar = (props: Props) => {
 
 			{/* Cart Icon */}
 			<button onClick={() => setShowCart(true)} className="font-orbitron text-gray-500 fixed right-5 text-right z-50">
-				[{totalQuantities}]
+				<div className="flex gap-2 py-1 items-center">
+					<CiShoppingCart size={25}/> 
+					<span className="text-lg">[ {totalQuantities} ]</span>
+				</div>
+				
 			</button>
 
 			{/* Cart modal */}

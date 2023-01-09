@@ -21,7 +21,7 @@ const chartOptions: Chart.ChartPluginsOptions = {
 			display: false as const
 		}
 	},
-	cutoutPercentage: 90
+	cutout: "90%"
 }
 
 type Props = {
