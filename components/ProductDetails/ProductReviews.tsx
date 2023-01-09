@@ -13,6 +13,17 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const chartOptions: Chart.ChartPluginsOptions = {
+	aspectRatio: 1, 
+	plugins: {
+		tooltip: false as const,
+		legend: {
+			display: false as const
+		}
+	},
+	cutoutPercentage: 90
+}
+
 type Props = {
 	slug: string,
 	reviewStats: {
@@ -64,16 +75,7 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 						width={100}
 						height={100}
 						datasetIdKey='id'
-						options={{
-							aspectRatio: 1, 
-							plugins: {
-								tooltip: false as const,
-								legend: {
-									display: false as const
-								}
-							},
-							cutout: '90%'
-						}}
+						options={chartOptions}
 						data={{
 							labels: ['Jun', 'Jul', 'Aug'],
 							datasets: [
