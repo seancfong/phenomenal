@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { useStateContext } from '../context/StateContext'
 import { CiShoppingCart } from "react-icons/ci";
 import Cart from './Cart'
+import { AnimatePresence } from 'framer-motion'
 
 type Props = {}
 
 const Navbar = (props: Props) => {
-	const { showCart, setShowCart, totalQuantities } = useStateContext();
+	const { setShowCart, totalQuantities } = useStateContext();
 
   return (
     <div className="w-full flex justify-center items-center h-[8vh] bg-[#eeeeee] z-50">
@@ -17,16 +18,17 @@ const Navbar = (props: Props) => {
 			</h1>
 
 			{/* Cart Icon */}
-			<button onClick={() => setShowCart(true)} className="font-orbitron text-gray-500 fixed right-5 text-right z-50">
+			<button onClick={() => setShowCart(true)} className="font-orbitron text-gray-500 fixed right-[5vw] text-right z-50">
 				<div className="flex gap-2 py-1 items-center">
 					<CiShoppingCart size={25}/> 
-					<span className="text-lg">[ {totalQuantities} ]</span>
+					<span className="text-lg hidden md:block">[ {totalQuantities} ]</span>
 				</div>
 				
 			</button>
 
 			{/* Cart modal */}
-			{ showCart && <Cart/> }
+			<Cart/>
+			
     </div>
   )
 }
