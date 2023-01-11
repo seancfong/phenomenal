@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { client, urlFor } from '../../lib/client'
 import { ProductDescription, ProductFeatures, ProductSolution } from '../../components/ProductDetails';
@@ -6,6 +6,7 @@ import { renderBackgroundPattern } from '../../helpers/renderCollectionColors'
 import ProductDesign from '../../components/ProductDetails/ProductDesign';
 import ProductReviews from '../../components/ProductDetails/ProductReviews';
 import { useStateContext } from '../../context/StateContext'
+import { motion, useInView } from 'framer-motion';
 
 export interface IReviewStats {
 	avgReview: number,
@@ -16,22 +17,29 @@ const ProductDetails = ({ product, reviewStats }) => {
   const { image, name, price, details, collection, features, _id, slug, productSolution } = product;
 	const { incQty, decQty, qty, onAdd } = useStateContext();
 
+	const sectionRef = useRef(null);
+	const isInView = useInView(sectionRef);
+
 	return (
-		<div className={"w-full flex flex-col bg-[#eeeeee] items-center justify-center gap-10 " + renderBackgroundPattern(collection)}>
+		<div ref={sectionRef} className={"w-full flex flex-col bg-[#eeeeee] items-center justify-center gap-10 " + renderBackgroundPattern(collection)}>
 			{/* Top grid */}
 			<div className="grid items-start grid-rows-[auto_auto_1fr] grid-cols-[minmax(0,80vw)] md:grid-cols-[3fr_2fr] 
 				gap-5 px-5 md:px-10 max-w-7xl">
 				{/* Image container */}
-				<div className="row-span-1 border-[3px] border-gray-600 border-opacity-50 rounded-[15px] 
-					overflow-hidden justify-self-end self-stretch">
-					<img src={urlFor(image && image[0])} alt="product image" width={1024} height={1024}
+				<div className={`row-span-1 border-[3px] border-gray-600 border-opacity-50 rounded-[15px] 
+					overflow-hidden justify-self-end self-stretch transition duration-[800ms] ease-in-out ` + ( isInView ? "" : "opacity-50 scale-[98%]")}>
+					<motion.img src={urlFor(image && image[0])} alt="product image" width={1024} height={1024}
+					whileHover={{ scale: 1.01, transition: { duration: 0.3, ease: "easeOut" } }}
+					transition={{ duration: 0.4, ease: "easeInOut" }}
 					className="h-full w-full object-cover"/>
 				</div>
 
+				{/* Right side */}
 				<div className="row-span-2 self-stretch">
 					<div className="flex flex-col sticky top-10 gap-5">
 						{/* Product description container */}
 						<ProductDescription 
+							isInView={isInView}
 							name={name} 
 							price={price} 
 							collection={collection} 
@@ -46,14 +54,13 @@ const ProductDetails = ({ product, reviewStats }) => {
 						/>
 						
 						{/* Features description container */}
-						<ProductFeatures features={features}/>
+						<ProductFeatures features={features} isInView={isInView}/>
 					</div>
-				</div>
-				
-				
-				
+				</div>				
+					
 				{/* Solution container */}
-				<ProductSolution designSolutionDescription={productSolution} />
+				<ProductSolution designSolutionDescription={productSolution} isInView={isInView} />
+
 			</div>
 
 			{/* Section break */}

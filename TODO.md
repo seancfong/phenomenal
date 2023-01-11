@@ -3,6 +3,7 @@
 - [ ] Provide content for aqua collection design
 - [ ] Provide content for terra collection design
 - [ ] Improve design for homepage product listing
+- [ ] Change tab name on product
 
 > Finished
 - [x] Import better cart icon (*1/8/2023*)

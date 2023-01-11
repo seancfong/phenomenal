@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStateContext } from '../context/StateContext';
 import { urlFor } from '../lib/client';
 import { CiShoppingCart } from "react-icons/ci";
@@ -67,7 +67,7 @@ const Cart = (props: Props) => {
                   <BsArrowRightSquare size={25} color="#999999"/>
                 </button>
                 <h2>
-                  my cart
+                  here's your cart
                 </h2>
               </div>
               
@@ -75,7 +75,15 @@ const Cart = (props: Props) => {
               <div className="flex flex-col items-stretch w-full justify-between h-[90vh]">
                 {cartItems.length < 1 && (
                   <div className="flex flex-col items-center">
-                    <CiShoppingCart size={200} color="#BBBBBB"/>
+                    <motion.span
+                      initial={{ x: -1000, rotate: 0 }}
+                      animate={{ x: [-1000, 10, 0, 0], y: [0, -5, -10, 2, 0, 0], rotate: [0, 5, 9, -2, 0, 0] }}
+                      exit={{ x: 1000 }}
+                      transition={{ duration: 2, ease: "easeInOut"}} 
+                    >
+                     <CiShoppingCart size={200} color="#BBBBBB"/>
+                    </motion.span>
+                    
                     <h4 className="font-orbitron text-xl">
                       nothing is inside for now.
                     </h4>
@@ -100,11 +108,11 @@ const Cart = (props: Props) => {
                         key={item._id} 
                         className="flex flex-col gap-2">
                         {/* Image wrapper */}
-                        <div className="overflow-hidden border-gray-600 border-opacity-50 border-[2px] rounded-[10px] relative aspect-video">
-                          <img src={urlFor(item?.image[0])} alt="product image"/>
+                        <div className="overflow-hidden border-gray-600 border-opacity-50 border-[2px] rounded-[10px] relative aspect-[1.6]">
+                          <img src={urlFor(item?.image[0])} alt="product image" className="translate-y-[-10%]"/>
   
                           {/* Image gradient overlay */}
-                          <div className="absolute bg-gradient-to-b from-[rgba(204,201,201,0.1)] via-[rgba(104,101,101,0.3)] to-[rgba(73,90,90,0.8)] hover:opacity-50 transition duration-500
+                          <div className="absolute bg-gradient-to-b from-[rgba(204,201,201,0.1)] to-[rgba(73,90,90,0.8)] hover:opacity-50 transition duration-500
                             bg-opacity-50 w-full h-full top-0 left-0 py-5 px-8 flex flex-col justify-end">
                             <p className="font-medium text-2xl text-[#eeeeee]">${item.price}</p>
                             <h4 className="font-orbitron text-5xl tracking-wider text-[#eeeeee]">{item.name}</h4>
@@ -133,7 +141,7 @@ const Cart = (props: Props) => {
                 { cartItems.length >= 1 && (
                   <div className="sticky gap-3 bottom-0 mt-3 bg-gradient-to-b from-[rgba(200,200,200,0)] to-[rgba(0,0,0,0.3)] flex flex-col px-[15%] sm:px-[20vw] md:px-[10vw] py-5 backdrop-blur-sm">
                     <div className="flex items-center justify-between bg-[#EEEEEE] py-2 px-8 border-[2px] border-gray-600 border-opacity-50 rounded-[10px]">
-                      <p className="font-orbitron text-lg">total [{totalQuantities} item{(totalQuantities != 1) ? "s" : ""}]:</p>
+                      <p className="font-orbitron text-lg">total of {totalQuantities} item{(totalQuantities != 1) ? "s" : ""}:</p>
                       <p>${totalPrice}</p>
                     </div>
                     <button type="button" onClick={handleCheckout}
