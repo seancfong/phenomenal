@@ -4,15 +4,11 @@ import React, { useEffect, useRef } from 'react'
 import { useInView } from 'framer-motion'
 
 import { IoIosReturnRight } from 'react-icons/io'
+import Link from 'next/link'
 
 const HeroBanner = () => {
 	const sectionRef = useRef(null);
 	const isInView = useInView(sectionRef, { once: true })
-
-	useEffect(() => {
-		console.log("IN VIEW");
-		
-	}, [isInView])
   
 	return (
     <div className="w-full h-[110vh] md:h-[100vh] relative flex flex-col overflow-hidden md:flex-row-reverse md:items-center
@@ -65,12 +61,14 @@ const HeroBanner = () => {
 					{/* Leaves button */}
 					<button className={"bg-[url('/images/leaves.jpg')] bg-center w-[80%] max-w-xs sm:w-[100%] h-[3rem] relative rounded-xl overflow-hidden transition duration-[1000ms] delay-[950ms] ease-in-out " 
 							+ ( isInView ? "translate-y-0" : "translate-y-[20px] opacity-0" )}>
-						<div 
+						<Link 
+							href="#explore"
+							scroll={false}
 							className="h-full flex flex-row items-center justify-end gap-3 pr-5
 							bg-gradient-to-r from-[rgba(175,134,9,0.3)] to-[rgba(46,66,51,0.7)]">
 							<span className="text-white font-raleway text-xl">explore now</span>
 							<IoIosReturnRight size={30} color="#EEEEEE"/>
-						</div>
+						</Link>
 					</button>
 				</div>	
 			</div>

@@ -13,6 +13,7 @@ export const renderCollectionColorText = ( collectionString: string) => {
 }
 
 type Props = {
+	isInView: boolean,
 	designSolutionDescription: {
 		collection: string,
 		solutionHeader: string,
@@ -20,12 +21,12 @@ type Props = {
 	}
 }
 
-const ProductSolution = ({ designSolutionDescription }: Props) => {
+const ProductSolution = ({ isInView, designSolutionDescription }: Props) => {
 	const { collection, solutionHeader, solutionDescription } = designSolutionDescription || {}; 
 
   return (
-    <div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] text-right self-stretch">
+    <div className={`font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
+			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] text-right self-stretch transition duration-[800ms] delay-[200ms] ease-in-out ` + ( isInView ? "" : "opacity-50 scale-[95%]")}>
 			{/* Title */}
 			<div>
 				<h2 className="font-orbitron text-2xl tracking-wider">

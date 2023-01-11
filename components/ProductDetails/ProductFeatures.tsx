@@ -1,13 +1,14 @@
 import React from 'react'
 
 type Props = {
-	features: [string]
+	features: [string],
+	isInView: boolean
 }
 
-const ProductFeatures = ({ features }: Props) => {
+const ProductFeatures = ({ isInView, features }: Props) => {
   return (
-    <div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] row-span-2 self-end w-full">
+    <div className={`font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
+			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] row-span-2 self-end w-full transition duration-[800ms] delay-[300ms] ease-in-out ` + ( isInView ? "" : "opacity-50 scale-[95%]")}>
 			{/* Title */}
 			<div className="flex justify-between items-end">
 				<h2 className="font-orbitron text-2xl tracking-wider">features</h2>

@@ -65,7 +65,7 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 			<div className="md:sticky md:top-5 max-h-[80vh] font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
 				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] z-30 overflow-auto">
 				<div className="relative aspect-square w-[80%] sm:w-[50%] md:w-full self-center">
-					<div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-center space-y-1">
+					<div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-center space-y-1 w-full flex flex-col items-center">
 						<h4 className="font-orbitron text-5xl">
 							{avgReview ?? "0.0"}
 						</h4>

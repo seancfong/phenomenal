@@ -1,5 +1,6 @@
 import React from 'react'
 import StarRating from '../../components/StarRating';
+import { renderCollectionColorText } from './ProductSolution';
 
 const renderCartBackground = ( collectionString: string) => {
 	switch(collectionString) {
@@ -12,18 +13,8 @@ const renderCartBackground = ( collectionString: string) => {
 	}
 }
 
-export const renderCollectionColorText = ( collectionString: string) => {
-	switch(collectionString) {
-		case 'aqua':
-			return "text-aqua";
-		case 'terra':
-			return "text-terra";
-		default:
-			return "text-collectiongeneric";
-	}
-}
-
 type Props = {
+	isInView: boolean,
 	name: string,
 	price: number,
 	collection: string,
@@ -38,15 +29,15 @@ type Props = {
 	onAdd: () => void,
 }
 
-const ProductDescription = ({ name, price, collection, details, reviewStats, incQty, decQty, qty, onAdd }: Props) => {
+const ProductDescription = ({ isInView, name, price, collection, details, reviewStats, incQty, decQty, qty, onAdd }: Props) => {
 	const { avgReview, numReviews } = reviewStats || {};
 
 	const current = new Date();
 	current.setDate(current.getDate() + 4);
 
   return (
-		<div className="font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px]">
+		<div className={`font-raleway flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
+			rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] transition duration-[800ms] delay-[100ms] ease-in-out ` + ( isInView ? "" : "opacity-50 scale-[95%]")}>
 			{/* Title */}
 			<div className="flex justify-between items-end">
 				<h2 className="font-orbitron text-3xl tracking-wider">{name}</h2>

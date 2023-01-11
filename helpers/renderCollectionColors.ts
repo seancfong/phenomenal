@@ -8,3 +8,14 @@ export const renderBackgroundPattern = ( collectionString: string) => {
 			return "topography-background-pattern";
 	}
 }
+
+export const renderCollectionColorText = ( collectionString: string) => {
+	switch(collectionString) {
+		case 'aqua':
+			return "text-aqua";
+		case 'terra':
+			return "text-terra";
+		default:
+			return "text-collectiongeneric";
+	}
+}
