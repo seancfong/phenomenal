@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useStateContext } from '../context/StateContext';
 import { urlFor } from '../lib/client';
 import { CiShoppingCart } from "react-icons/ci";
@@ -16,6 +16,8 @@ const Cart = (props: Props) => {
   const handleCheckout = async () => {
     const stripe = await getStripe();
 
+    toast.loading('Redirecting...');
+
     const response = await fetch('/api/stripe', {
       method: 'POST',
       headers: {
@@ -29,9 +31,7 @@ const Cart = (props: Props) => {
     if (response.status === 500) return;
 
     const data = await response.json();
-
-    toast.loading('Redirecting...');
-
+    
     stripe.redirectToCheckout({ sessionId: data.id });
   }
 
@@ -87,7 +87,7 @@ const Cart = (props: Props) => {
                     <h4 className="font-orbitron text-xl">
                       nothing is inside for now.
                     </h4>
-                    <Link href="/">
+                    <Link href="#explore">
                       <button type="button" onClick={() => setShowCart(false)}>
                         <span>let's find something to fill it up!</span>
                       </button>

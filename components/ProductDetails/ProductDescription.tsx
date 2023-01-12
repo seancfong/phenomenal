@@ -50,7 +50,7 @@ const ProductDescription = ({ isInView, name, price, collection, details, review
 			{/* Review display */}
 				<div className="text-lg">
 					<StarRating rating={avgReview} starWidth={22}/>
-					{ reviewStats && <p>{numReviews ?? 0} reviews</p> }
+					{ reviewStats && <p>{numReviews ?? 0} review{numReviews == 1 ? "" : "s"}</p> }
 				</div>
 
 			{/* Description text */}

@@ -14,7 +14,7 @@ const ProductDiscovery = ({ products }: Props) => {
 				Explore our discoveries.
 			</h3>
 			<div className="flex justify-center">
-				<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] min-h-screen gap-5 md:gap-10 px-[5vw] sm:px-[20vw] md:px-[5vw] lg: px-[10vw]max-w-[1600px] overflow-x-hidden">
+				<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5 md:gap-10 px-[5vw] sm:px-[20vw] md:px-[5vw] lg:px-[10vw] overflow-x-hidden">
 					{ products?.map((product) => 
 						<Product key={product._id} product={product} /> 
 					) }

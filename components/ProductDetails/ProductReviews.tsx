@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
 
 // Star rating component
 import StarRating from '../StarRating'
@@ -49,11 +48,8 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 	useEffect(() => {
 		// Default fetch up to 10 reviews on load
 		fetchReview(10)
-			.catch(console.error);
-
-		setTimeout(() => {
-			setReviewChartData([avgReview ?? 0, 5 - (avgReview ?? 0)]);
-		}, 1000);
+			.catch(console.error)
+			.then(() => {setReviewChartData([avgReview ?? 0, 5 - (avgReview ?? 0)])});
 		
 	}, [reviewStats]);
 
@@ -67,7 +63,7 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 				<div className="relative aspect-square w-[80%] sm:w-[50%] md:w-full self-center">
 					<div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-center space-y-1 w-full flex flex-col items-center">
 						<h4 className="font-orbitron text-5xl">
-							{avgReview ?? "0.0"}
+							{Math.round(avgReview * 10) / 10 ?? "0.0"}
 						</h4>
 						<StarRating rating={avgReview} starWidth={20}/>
 					</div>
@@ -98,8 +94,8 @@ const ProductReviews = ({ slug, reviewStats }: Props) => {
 
 
 			{/* Reviews */}
-			<div className="font-raleway flex flex-col row-span-2 gap-5 border-[3px] border-gray-600 border-opacity-50 
-				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px] h-screen">
+			<div className="font-raleway flex flex-col row-span-2 self-stretch gap-5 border-[3px] border-gray-600 border-opacity-50 
+				rounded-[15px] px-10 md:px-7 lg:px-10 py-5 backdrop-blur-[2px]">
 				{/* Title */}
 				<div>
 					<h2 className="font-orbitron text-3xl tracking-wider">hear what they say</h2>
