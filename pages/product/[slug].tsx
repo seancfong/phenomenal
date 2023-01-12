@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { client, urlFor } from '../../lib/client'
 import { ProductDescription, ProductFeatures, ProductSolution } from '../../components/ProductDetails';
@@ -29,7 +29,7 @@ const ProductDetails = ({ product, reviewStats }) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  const { image, name, price, details, collection, features, _id, slug, productSolution } = product;
+  const { image, name, price, details, collection, features, _id, slug, productSolution, relatedProducts } = product;
 	const { incQty, decQty, qty, onAdd } = useStateContext();
 
 	const sectionRef = useRef(null);
@@ -113,7 +113,7 @@ const ProductDetails = ({ product, reviewStats }) => {
 			</div>
 
 			<div className="flex justify-center w-full gap-5 px-5 md:px-10 max-w-7xl">
-				<ProductRelated collection={collection} slug={slug}/>
+				<ProductRelated relatedProducts={relatedProducts} collection={collection}/>
 			</div>
 
       <motion.button
@@ -156,7 +156,11 @@ export const getStaticProps = async ({ params: { slug }}) => {
 			"slug": slug.current,
 			"productSolution": *[_type == "productDesign" && collection == ^.collection][0] {
 				solutionDescription, solutionHeader, collection
-			}
+			},
+      "relatedProducts": *[_type == "product" && slug.current != '${slug}' && collection == ^.collection] {
+        image, name, price, details, collection, features, _id, 
+			  "slug": slug.current,
+      }
 	}`;
 
 	const reviewQuery = `{
