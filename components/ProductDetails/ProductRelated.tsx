@@ -1,31 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { client } from '../../lib/client'
 import Product from '../Product'
 import { renderCollectionColorText } from './ProductSolution'
 
 type Props = {
-	collection: string,
-	slug: string
+	relatedProducts: Array<any>,
+	collection: string
 }
 
-const ProductRelated = ({ collection, slug }: Props) => {
-	const [ relatedProducts, setRelatedProducts ] = useState([]);
-
-	const fetchRelated = async (collection: string) => {
-		const queryRelated = 
-			(collection ? `*[_type == "product" && slug.current != '${slug}' && collection == '${collection}']`
-				:`*[_type == "product" && slug.current != '${slug}' && collection == null]`
-			);
-		
-		await client.fetch(queryRelated)
-			.then(data => {
-				setRelatedProducts(data);
-			})
-	}
-
-	useEffect(() => {
-		fetchRelated(collection);
-	}, []);
+const ProductRelated = ({ relatedProducts, collection }: Props) => {
 
   return (
     <div className="flex flex-col gap-5 items-center">
