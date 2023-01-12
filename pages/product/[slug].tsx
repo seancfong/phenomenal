@@ -22,6 +22,8 @@ const ScrollToTopContainerVariants: Variants = {
 };
 
 const ProductDetails = ({ product, reviewStats }) => {
+  console.log(product.relatedProducts);
+
   const isBrowser = () => typeof window !== 'undefined';
 
   const scrollToTop = () => {
@@ -158,8 +160,7 @@ export const getStaticProps = async ({ params: { slug }}) => {
 				solutionDescription, solutionHeader, collection
 			},
       "relatedProducts": *[_type == "product" && slug.current != '${slug}' && collection == ^.collection] {
-        image, name, price, details, collection, features, _id, 
-			  "slug": slug.current,
+        image, name, price, details, collection, features, _id, slug
       }
 	}`;
 
