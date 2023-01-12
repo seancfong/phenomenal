@@ -18,7 +18,6 @@ const Navbar = (props: Props) => {
 		if (totalQuantities != 0) {
 			cartAnimation.start({ scale: [1, 1.5, 1] });
 		}
-    
 		
   }, [totalQuantities]);
 

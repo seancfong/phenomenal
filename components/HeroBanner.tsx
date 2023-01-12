@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import { useInView } from 'framer-motion'
 

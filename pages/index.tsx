@@ -15,6 +15,7 @@ const Home = ({ products }) => {
         </h2>
         <p>Something about keyboards</p>
       </div> */}  
+      
       {/* Product discovery section */}
       <ProductDiscovery products={products}/>
     

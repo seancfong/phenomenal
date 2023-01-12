@@ -15,14 +15,14 @@ const Product = ({ product: { image, name, slug, price, details, collection } })
     <motion.div 
 			onHoverStart={() => { setRevealDetails(true) }}
 			onHoverEnd={() => { setRevealDetails(false) }}
-			ref={productRef} className={"bg-[#eeeeee] bg-blur-sm flex flex-col items-center border-[2px] border-gray-600 rounded-[10px] w-full h-full transition duration-1000 " 
+			ref={productRef} className={"bg-[#eeeeee] bg-blur-sm flex flex-col items-center border-[2px] border-gray-600 rounded-[10px] transition duration-1000 " 
 			+ (isInView ? "": "opacity-50")}>
 			<Link href={`/product/${slug.current}`}>
 				<div className="p-[5%] flex flex-col gap-3">
-					<div className={"w-full overflow-hidden rounded-[10px] transition duration-1000 " 
+					<div className={"w-full overflow-hidden rounded-[10px] transition duration-1000 aspect-square " 
 						+ (isInView ? "": "translate-y-5")}>
 						<motion.img 
-							src={urlFor(image && image[0])} width={250} height={250} className="w-full h-full" 
+							src={urlFor(image && image[0])} width={250} height={250} className="w-full h-full object-cover" 
 							whileHover={{ scale: 1.03, transition: { duration: 0.3, ease: "easeOut" } }}
 							transition={{ duration: 0.4, ease: "easeInOut" }}
 						/>

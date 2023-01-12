@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 import { toast } from 'react-hot-toast';
 
@@ -14,10 +14,6 @@ export const StateContext = ({ children }) => {
 	let foundProduct;
 	let index;
 
-	useEffect(() => {
-		console.log(cartItems);
-	},[cartItems]);
-
 	const onAdd = (product, quantity) => {
 		const checkProductInCart = cartItems.find((item) => item._id === product._id);
 		
@@ -25,7 +21,7 @@ export const StateContext = ({ children }) => {
 		setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
 		if (checkProductInCart) {
-			console.log(`${product.name} found in cart`);
+			// console.log(`${product.name} found in cart`);
 			const updatedCartItems = cartItems.map((cartProduct) => {
 				return {
 					...cartProduct,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { client, urlFor } from '../../lib/client'
+import ProductDesignImage from './ProductDesignImage'
 
 type Props = {
 	collection: string
@@ -34,7 +35,7 @@ const ProductDesign = ({ collection }: Props) => {
 						<>
 							<div className="self-stretch">
 								<div className="font-raleway text-xl flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-								rounded-[15px] px-10 py-5 backdrop-blur-[2px] md:col-span-1 items-end md:sticky md:top-[30vh]">
+								rounded-[15px] px-10 py-5 backdrop-blur-[2px] md:col-span-1 items-end md:sticky md:top-[45vh]">
 									<h4 className="font-orbitron lowercase text-2xl tracking-wider">
 										{header}
 									</h4>
@@ -48,23 +49,19 @@ const ProductDesign = ({ collection }: Props) => {
 								</div>
 							</div>
 							
-
-							<div className="aspect-[4/3] overflow-auto rounded-[15px] md:col-span-2 mb-20 md:mb-0">
-								<img src={urlFor(imageSrc && imageSrc[0])} alt="Product Design Image" className="w-full h-full object-cover"/>
-							</div>
+							<ProductDesignImage imgSrc={urlFor(imageSrc && imageSrc[0])}/>
+							
 						</>
 						
 					)}
 	
 					{ index % 2 != 0 && (
 						<>
-							<div className="aspect-[4/3] overflow-auto rounded-[15px] md:col-span-2 ">
-								<img src={urlFor(imageSrc && imageSrc[0])} alt="Product Design Image" className="h-full w-full object-cover" />
-							</div>
+							<ProductDesignImage imgSrc={urlFor(imageSrc && imageSrc[0])}/>
 
 							<div className="self-stretch">
 								<div key={index} className="font-raleway text-xl flex flex-col gap-5 border-[3px] border-gray-600 border-opacity-50 
-								rounded-[15px] px-10 py-5 backdrop-blur-[2px] md:col-span-1 self-stretch mb-20 md:mb-0 md:sticky md:top-[30vh]">
+								rounded-[15px] px-10 py-5 backdrop-blur-[2px] md:col-span-1 self-stretch md:sticky md:top-[45vh]">
 									<h4 className="font-orbitron lowercase text-2xl tracking-wider">
 										{header}
 									</h4>
